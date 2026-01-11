@@ -5,10 +5,7 @@ from .blender_client import BlenderClient
 from .tools import register_all_tools
 
 # Initialize MCP server
-mcp = FastMCP(
-    name="blender-mcp",
-    version="0.1.0",
-)
+mcp = FastMCP("blender-mcp")
 
 # Initialize Blender client
 client = BlenderClient(host="localhost", port=8765)
