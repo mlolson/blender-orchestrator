@@ -154,6 +154,156 @@ Add the MCP server to your Claude configuration.
 - `set_parent` - Set object parent
 - `check_blender_connection` - Check if Blender is connected
 
+### AI Mesh Generation
+- `generate_mesh_from_text` - Generate 3D mesh from text description
+- `generate_mesh_from_image` - Generate 3D mesh from reference image
+- `import_mesh_file` - Import mesh file (GLB, OBJ, FBX, PLY, STL)
+- `list_mesh_generation_providers` - Show available AI providers
+
+### AI Texture Generation
+- `generate_texture` - Generate texture from text description
+- `generate_pbr_material_textures` - Generate complete PBR material
+- `apply_texture_to_object` - Apply texture file to object
+- `list_texture_generation_providers` - Show available AI providers
+
+---
+
+## AI-Powered Generation
+
+Generate 3D meshes and textures using cloud AI APIs from Meshy and Stability AI.
+
+### Configuration
+
+Set environment variables for the AI providers you want to use:
+
+```bash
+# For Meshy (text-to-3D and image-to-3D)
+export MESHY_API_KEY="msy_your_key_here"
+
+# For Stability AI (image-to-3D and textures)
+export STABILITY_API_KEY="sk-your_key_here"
+```
+
+Or create a config file at `~/.config/blender-mcp/ai_providers.json`:
+
+```json
+{
+  "meshy": {
+    "api_key": "msy_your_key_here",
+    "timeout": 600
+  },
+  "stability": {
+    "api_key": "sk-your_key_here",
+    "timeout": 300
+  }
+}
+```
+
+### Mesh Generation
+
+#### Available Models
+
+| Provider | Model | Input Type | Description |
+|----------|-------|------------|-------------|
+| Meshy | `latest` (Meshy-6) | Text or Image | Best quality, recommended |
+| Meshy | `meshy-5` | Text or Image | Previous generation |
+| Stability | `stable-fast-3d` | Image only | Stability's image-to-3D |
+
+#### Text-to-3D
+
+Generate a 3D mesh from a text description:
+
+```
+generate_mesh_from_text(
+    prompt="a wooden chair",
+    provider="meshy",
+    art_style="realistic",
+    refine=True,
+    import_to_scene=True,
+    location=[0, 0, 0],
+    name="Chair"
+)
+```
+
+Art styles: `realistic`, `cartoon`, `sculpture`, `pbr`
+
+Example prompts:
+- "a medieval castle tower"
+- "a red sports car"
+- "a cartoon dog"
+- "a wooden treasure chest"
+
+#### Image-to-3D
+
+Generate a 3D mesh from a reference image:
+
+```
+generate_mesh_from_image(
+    image_path="/path/to/photo.png",
+    provider="meshy",
+    import_to_scene=True,
+    location=[0, 0, 0],
+    name="MyModel"
+)
+```
+
+Tips for best results:
+- Use images with a single object on a clean/white background
+- Ensure the object is well-lit and centered
+- Avoid cluttered backgrounds
+
+### Texture Generation
+
+#### Single Texture
+
+Generate a texture map:
+
+```
+generate_texture(
+    prompt="weathered wood planks",
+    texture_type="diffuse",
+    resolution=1024,
+    seamless=True,
+    provider="stability",
+    apply_to_object="Cube"
+)
+```
+
+Texture types: `diffuse`, `normal`, `roughness`, `metallic`, `ambient_occlusion`
+
+#### Complete PBR Material
+
+Generate multiple texture maps for a full PBR material:
+
+```
+generate_pbr_material_textures(
+    prompt="rusty corroded metal",
+    apply_to_object="Cube",
+    include_normal=True,
+    include_roughness=True,
+    include_metallic=True,
+    resolution=1024,
+    provider="stability"
+)
+```
+
+Example prompts:
+- "cobblestone path"
+- "brushed aluminum"
+- "mossy stone wall"
+- "worn leather"
+- "sci-fi metal panels"
+
+### API Costs
+
+AI generation uses paid APIs:
+- **Meshy**: Credit-based, ~20 credits per generation. See [meshy.ai/pricing](https://www.meshy.ai/pricing)
+- **Stability AI**: Credit-based, varies by model
+
+Check provider websites for current pricing.
+
+---
+
 ## Testing the Connection
 
 You can test if the Blender server is running:
@@ -194,13 +344,22 @@ blender_tools/
 │   ├── __init__.py         # Add-on registration
 │   ├── server/             # HTTP server
 │   ├── handlers/           # Blender operation handlers
+│   │   ├── mesh_import.py      # AI mesh import handlers
+│   │   └── texture_application.py  # Texture application handlers
 │   ├── operators/          # Blender operators
 │   └── utils/              # Utilities
 │
 ├── mcp_server/             # MCP server
 │   ├── server.py           # FastMCP server
 │   ├── blender_client.py   # HTTP client
-│   └── tools/              # MCP tool definitions
+│   ├── tools/              # MCP tool definitions
+│   │   ├── ai_mesh_generation.py    # AI mesh generation tools
+│   │   └── ai_texture_generation.py # AI texture generation tools
+│   └── ai_clients/         # AI provider clients
+│       ├── base.py             # Abstract base classes
+│       ├── config.py           # API key management
+│       ├── meshy_client.py     # Meshy API client
+│       └── stability_client.py # Stability AI client
 │
 └── scripts/                # Helper scripts
 ```

@@ -6,6 +6,12 @@ from . import mesh_editing
 from . import materials
 from . import rendering
 from . import scene
+from . import metaballs
+from . import curves
+from . import skinning
+from . import templates
+from . import ai_mesh_generation
+from . import ai_texture_generation
 
 
 def register_all_tools(mcp, client):
@@ -16,3 +22,11 @@ def register_all_tools(mcp, client):
     materials.register_tools(mcp, client)
     rendering.register_tools(mcp, client)
     scene.register_tools(mcp, client)
+    # New tools for improved character creation
+    metaballs.register_tools(mcp, client)
+    curves.register_tools(mcp, client)
+    skinning.register_tools(mcp, client)
+    templates.register_tools(mcp, client)
+    # AI-powered generation tools
+    ai_mesh_generation.register_tools(mcp, client)
+    ai_texture_generation.register_tools(mcp, client)

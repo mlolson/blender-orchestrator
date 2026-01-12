@@ -24,10 +24,11 @@ def set_server(server: Optional["BlenderHTTPServer"]) -> None:
     _server = server
 
 
-class NonBlockingHTTPServer(socketserver.TCPServer):
+class NonBlockingHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     """HTTP server that can be polled without blocking."""
 
     allow_reuse_address = True
+    daemon_threads = True  # Don't block shutdown on request threads
     timeout = 0  # Non-blocking
 
     def __init__(
