@@ -11,7 +11,6 @@ def register_tools(mcp, client):
     @mcp.tool()
     async def generate_mesh_from_text(
         prompt: str,
-        provider: str = "meshy",
         art_style: str = "realistic",
         refine: bool = True,
         import_to_scene: bool = True,
@@ -25,8 +24,6 @@ def register_tools(mcp, client):
         Args:
             prompt: Text description of the 3D object to generate
                     (e.g., "a wooden chair", "a red sports car")
-            provider: AI provider to use ("meshy" or "stability")
-                     Note: Stability requires image input, not text
             art_style: Style for generation:
                       - "realistic": Photorealistic style
                       - "cartoon": Stylized cartoon look
@@ -42,31 +39,24 @@ def register_tools(mcp, client):
         """
         config = get_ai_config()
 
-        if provider == "meshy":
-            if not config.has_provider("meshy"):
-                return "Error: MESHY_API_KEY not configured. Set the environment variable."
-
-            from ..ai_clients.meshy_client import MeshyClient
-
-            try:
-                mesh_client = MeshyClient()
-            except ValueError as e:
-                return f"Error: {str(e)}"
-
-            result = await mesh_client.generate_from_text(
-                prompt=prompt,
-                art_style=art_style,
-                refine=refine,
-            )
-
-        elif provider == "stability":
+        if not config.has_provider("meshy"):
             return (
-                "Error: Stability AI does not support direct text-to-3D. "
-                "Use provider='meshy' for text-to-3D, or first generate an image, "
-                "then use generate_mesh_from_image() with Stability."
+                "Error: Meshy API key not configured. "
+                "Add meshy_api_key to config.json or set MESHY_API_KEY environment variable."
             )
-        else:
-            return f"Error: Unknown provider '{provider}'. Use 'meshy' or 'stability'."
+
+        from ..ai_clients.meshy_client import MeshyClient
+
+        try:
+            mesh_client = MeshyClient()
+        except ValueError as e:
+            return f"Error: {str(e)}"
+
+        result = await mesh_client.generate_from_text(
+            prompt=prompt,
+            art_style=art_style,
+            refine=refine,
+        )
 
         # Check result
         if result.status.value == "failed":
@@ -76,99 +66,6 @@ def register_tools(mcp, client):
             return "Error: Generation succeeded but no mesh file was produced."
 
         output_msg = f"Generated 3D mesh from prompt: '{prompt}'\n"
-        output_msg += f"Provider: {result.provider}\n"
-        output_msg += f"Local file: {result.local_path}\n"
-
-        if result.generation_time_seconds:
-            output_msg += f"Generation time: {result.generation_time_seconds:.1f}s\n"
-
-        # Import to scene if requested
-        if import_to_scene:
-            try:
-                import_result = await client.execute(
-                    "import_mesh_file",
-                    {
-                        "file_path": result.local_path,
-                        "name": name,
-                        "location": location or [0, 0, 0],
-                    },
-                )
-
-                if "error" in import_result:
-                    output_msg += f"Import failed: {import_result['error']}"
-                else:
-                    output_msg += f"Imported as '{import_result['name']}' at {import_result['location']}"
-
-            except Exception as e:
-                output_msg += f"Import failed: {str(e)}"
-
-        return output_msg
-
-    @mcp.tool()
-    async def generate_mesh_from_image(
-        image_path: str,
-        provider: str = "meshy",
-        import_to_scene: bool = True,
-        location: Optional[List[float]] = None,
-        name: Optional[str] = None,
-    ) -> str:
-        """Generate a 3D mesh from a reference image using AI.
-
-        Uses cloud AI APIs to convert 2D images into 3D models.
-        Works best with images showing a single object on a clean background.
-
-        Args:
-            image_path: Path to the input image file (PNG, JPG)
-            provider: AI provider to use ("meshy" or "stability")
-            import_to_scene: Whether to import the generated mesh into Blender
-            location: [x, y, z] position for imported mesh
-            name: Optional name for the imported object
-
-        Returns:
-            Status message with generation result
-        """
-        config = get_ai_config()
-
-        if provider == "meshy":
-            if not config.has_provider("meshy"):
-                return "Error: MESHY_API_KEY not configured. Set the environment variable."
-
-            from ..ai_clients.meshy_client import MeshyClient
-
-            try:
-                mesh_client = MeshyClient()
-            except ValueError as e:
-                return f"Error: {str(e)}"
-
-            result = await mesh_client.generate_from_image(
-                image_path=image_path,
-            )
-
-        elif provider == "stability":
-            if not config.has_provider("stability"):
-                return "Error: STABILITY_API_KEY not configured. Set the environment variable."
-
-            from ..ai_clients.stability_client import StabilityMeshClient
-
-            try:
-                mesh_client = StabilityMeshClient()
-            except ValueError as e:
-                return f"Error: {str(e)}"
-
-            result = await mesh_client.generate_from_image(
-                image_path=image_path,
-            )
-        else:
-            return f"Error: Unknown provider '{provider}'. Use 'meshy' or 'stability'."
-
-        # Check result
-        if result.status.value == "failed":
-            return f"Error: Generation failed - {result.error}"
-
-        if not result.local_path:
-            return "Error: Generation succeeded but no mesh file was produced."
-
-        output_msg = f"Generated 3D mesh from image: '{image_path}'\n"
         output_msg += f"Provider: {result.provider}\n"
         output_msg += f"Local file: {result.local_path}\n"
 
@@ -215,30 +112,18 @@ def register_tools(mcp, client):
         if config.has_provider("meshy"):
             output += "MESHY: Configured\n"
             output += "  Models:\n"
-            output += "    - latest (Meshy-6): Best quality, text & image input\n"
+            output += "    - latest (Meshy-6): Best quality\n"
             output += "    - meshy-5: Previous generation\n"
             output += "  Styles: realistic, cartoon, sculpture, pbr\n"
             output += "  Output: GLB, FBX, OBJ, USDZ\n"
         else:
             output += "MESHY: Not configured\n"
-            output += "  Set MESHY_API_KEY environment variable\n"
+            output += "  Add meshy_api_key to config.json or set MESHY_API_KEY env var\n"
 
         output += "\n"
-
-        # Stability
-        if config.has_provider("stability"):
-            output += "STABILITY AI: Configured\n"
-            output += "  Models:\n"
-            output += "    - stable-fast-3d: Image-to-3D only\n"
-            output += "  Note: Does not support text-to-3D\n"
-        else:
-            output += "STABILITY AI: Not configured\n"
-            output += "  Set STABILITY_API_KEY environment variable\n"
-
-        output += "\n"
-        output += "Supported input types:\n"
-        output += "  - Text-to-3D: Meshy only\n"
-        output += "  - Image-to-3D: Meshy or Stability\n"
+        output += "Usage:\n"
+        output += '  generate_mesh_from_text("a wooden chair")\n'
+        output += '  generate_mesh_from_text("robot", art_style="cartoon")\n'
 
         return output
 

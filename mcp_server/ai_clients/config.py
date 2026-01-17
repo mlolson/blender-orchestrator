@@ -32,10 +32,13 @@ class AIConfig:
 
     def _load_config(self):
         """Load configuration from environment and config file."""
-        # Load from environment variables first
+        # Load from environment variables first (highest priority)
         self._load_from_env()
 
-        # Then load from config file (won't override env vars)
+        # Then load from project root config.json
+        self._load_from_project_config()
+
+        # Finally load from user config files (won't override existing)
         config_paths = [
             Path.home() / ".config" / "blender-mcp" / "ai_providers.json",
             Path.home() / ".blender-mcp" / "ai_providers.json",
@@ -45,6 +48,36 @@ class AIConfig:
             if config_path.exists():
                 self._load_from_file(config_path)
                 break
+
+    def _load_from_project_config(self):
+        """Load configuration from config.json at project root."""
+        # Find project root (parent of mcp_server/)
+        current_file = Path(__file__)  # config.py
+        ai_clients_dir = current_file.parent  # ai_clients/
+        mcp_server_dir = ai_clients_dir.parent  # mcp_server/
+        project_root = mcp_server_dir.parent  # project root
+
+        config_path = project_root / "config.json"
+
+        if not config_path.exists():
+            return
+
+        try:
+            with open(config_path) as f:
+                data = json.load(f)
+
+            # Map config.json keys to provider configs
+            # Only set if not already configured (env vars take priority)
+            if "meshy_api_key" in data and "meshy" not in self._configs:
+                self._configs["meshy"] = ProviderConfig(
+                    api_key=data["meshy_api_key"],
+                    base_url="https://api.meshy.ai/openapi/v2",
+                    timeout=600,
+                    default_model="latest",
+                )
+
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Could not load config from {config_path}: {e}")
 
     def _load_from_env(self):
         """Load configuration from environment variables."""
@@ -56,26 +89,6 @@ class AIConfig:
                 base_url="https://api.meshy.ai/openapi/v2",
                 timeout=600,  # 10 min for mesh generation
                 default_model="latest",
-            )
-
-        # Stability AI
-        stability_key = os.getenv("STABILITY_API_KEY")
-        if stability_key:
-            self._configs["stability"] = ProviderConfig(
-                api_key=stability_key,
-                base_url="https://api.stability.ai",
-                timeout=300,
-                default_model="stable-fast-3d",
-            )
-
-        # OpenAI (optional, for DALL-E image generation)
-        openai_key = os.getenv("OPENAI_API_KEY")
-        if openai_key:
-            self._configs["openai"] = ProviderConfig(
-                api_key=openai_key,
-                base_url="https://api.openai.com/v1",
-                timeout=120,
-                default_model="dall-e-3",
             )
 
     def _load_from_file(self, path: Path):
