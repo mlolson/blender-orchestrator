@@ -163,9 +163,84 @@ def get_render_settings(params: Dict[str, Any]) -> Dict[str, Any]:
     return settings
 
 
+def set_world_hdri(params: Dict[str, Any]) -> Dict[str, Any]:
+    """Set an HDRI image as the world environment.
+    
+    Args:
+        params: Dictionary with:
+            - hdri_path: Path to the HDRI file (.hdr or .exr)
+            - strength: Environment light strength (default: 1.0)
+            - rotation: Z rotation in degrees (default: 0)
+    
+    Returns:
+        World settings info
+    """
+    hdri_path = params.get("hdri_path")
+    strength = params.get("strength", 1.0)
+    rotation = params.get("rotation", 0)
+    
+    if not hdri_path:
+        return {"error": "hdri_path is required"}
+    
+    if not os.path.exists(hdri_path):
+        return {"error": f"HDRI file not found: {hdri_path}"}
+    
+    # Get or create world
+    world = bpy.context.scene.world
+    if not world:
+        world = bpy.data.worlds.new("World")
+        bpy.context.scene.world = world
+    
+    world.use_nodes = True
+    nodes = world.node_tree.nodes
+    links = world.node_tree.links
+    
+    # Clear existing nodes
+    nodes.clear()
+    
+    # Create nodes
+    # 1. Texture Coordinate
+    tex_coord = nodes.new("ShaderNodeTexCoord")
+    tex_coord.location = (-800, 0)
+    
+    # 2. Mapping (for rotation)
+    mapping = nodes.new("ShaderNodeMapping")
+    mapping.location = (-600, 0)
+    import math
+    mapping.inputs["Rotation"].default_value[2] = math.radians(rotation)
+    
+    # 3. Environment Texture
+    env_tex = nodes.new("ShaderNodeTexEnvironment")
+    env_tex.location = (-300, 0)
+    env_tex.image = bpy.data.images.load(hdri_path)
+    
+    # 4. Background
+    background = nodes.new("ShaderNodeBackground")
+    background.location = (0, 0)
+    background.inputs["Strength"].default_value = strength
+    
+    # 5. World Output
+    world_output = nodes.new("ShaderNodeOutputWorld")
+    world_output.location = (200, 0)
+    
+    # Link nodes
+    links.new(tex_coord.outputs["Generated"], mapping.inputs["Vector"])
+    links.new(mapping.outputs["Vector"], env_tex.inputs["Vector"])
+    links.new(env_tex.outputs["Color"], background.inputs["Color"])
+    links.new(background.outputs["Background"], world_output.inputs["Surface"])
+    
+    return {
+        "world": world.name,
+        "hdri": hdri_path,
+        "strength": strength,
+        "rotation": rotation,
+    }
+
+
 RENDERING_HANDLERS = {
     "render_to_file": render_to_file,
     "render_viewport": render_viewport,
     "set_render_settings": set_render_settings,
     "get_render_settings": get_render_settings,
+    "set_world_hdri": set_world_hdri,
 }
