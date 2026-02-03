@@ -12,6 +12,7 @@ from .texture_application import TEXTURE_APPLICATION_HANDLERS
 from .spatial import SPATIAL_HANDLERS
 from .lighting import LIGHTING_HANDLERS
 from .camera import CAMERA_HANDLERS
+from .vr_optimization import VR_OPTIMIZATION_HANDLERS
 from ..templates import TEMPLATE_HANDLERS
 
 
@@ -38,4 +39,6 @@ def get_handler_registry():
     registry.update(LIGHTING_HANDLERS)
     # Camera handlers
     registry.update(CAMERA_HANDLERS)
+    # VR/Horizon Worlds optimization
+    registry.update(VR_OPTIMIZATION_HANDLERS)
     return registry
