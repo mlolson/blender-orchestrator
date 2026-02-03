@@ -39,3 +39,6 @@ Thumbs.db
 
 out/
 .claude-spp/
+
+# Private docs
+docs/competitive-analysis.md

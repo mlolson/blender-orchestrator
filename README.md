@@ -12,6 +12,8 @@ Plug in the API keys to mesh generation services like meshy, or image generation
 - **AI-powered generation**: Generate 3D meshes from text descriptions or reference images using Meshy and Stability AI.
 - **Rapid prototyping**: Iterate on designs through conversation, getting immediate visual feedback.
 - **Automation**: Script complex modeling workflows without writing Blender Python code.
+- **VR-ready exports**: Optimize and export models for Meta Quest and Horizon Worlds.
+- **Free assets**: Access thousands of CC0 HDRIs, textures, and models from Poly Haven.
 
 
 ## Quick Start
@@ -55,7 +57,7 @@ Add to your Agent Desktop config (`~/Library/Application Support/Agent/Agent_des
 }
 ```
 
-For Calide Code CLI, add the same to `.claude/settings.json`.
+For Claude Code CLI, add the same to `.claude/settings.json`.
 
 ### Usage
 
@@ -118,6 +120,7 @@ Full PBR material support with AI-powered texture generation.
 | `render_image` | Full render to file (EEVEE, Cycles, Workbench) |
 | `capture_viewport` | Quick viewport screenshot |
 | `set_render_settings`, `get_render_settings` | Configure resolution, samples, format |
+| `set_world_hdri` | Apply HDRI environment lighting |
 
 ### Scene Management
 
@@ -136,6 +139,29 @@ Generate complete 3D models from text or images using cloud AI APIs.
 | `generate_mesh_from_text` | Text-to-3D model generation |
 | `generate_mesh_from_image` | Image-to-3D model generation |
 | `import_mesh_file` | Import GLB, OBJ, FBX, PLY, STL |
+
+### VR Optimization
+
+Tools for optimizing 3D assets for VR platforms.
+
+| Tool | Description |
+|------|-------------|
+| `validate_for_vr` | Check if model meets VR platform limits |
+| `optimize_for_vr` | Decimate and optimize for VR platforms |
+| `generate_lod_chain` | Create LOD variants for performance |
+| `export_vr_scene` | Export optimized GLB for VR |
+
+### Poly Haven (Free Assets)
+
+Access thousands of free CC0 assets from [Poly Haven](https://polyhaven.com).
+
+| Tool | Description |
+|------|-------------|
+| `search_polyhaven` | Search free CC0 assets |
+| `list_polyhaven_categories` | Browse available categories |
+| `download_polyhaven_hdri` | Download and apply HDRI lighting |
+| `download_polyhaven_texture` | Download PBR texture sets |
+| `download_polyhaven_model` | Download and import 3D models |
 
 ---
 
@@ -187,6 +213,131 @@ Art styles: `realistic`, `cartoon`, `sculpture`, `pbr`
 ### API Costs
 
 Both providers use credit-based pricing. See [meshy.ai/pricing](https://www.meshy.ai/pricing) and Stability AI documentation.
+
+---
+
+## VR Optimization
+
+Built-in tools for optimizing 3D assets for VR platforms, with presets for Meta Horizon Worlds.
+
+### Platform Presets
+
+| Preset | Max Tris/Object | Max Tris/Scene | Max Texture |
+|--------|-----------------|----------------|-------------|
+| `horizon_worlds` | 10,000 | 100,000 | 2048px |
+| `quest` | 50,000 | 200,000 | 4096px |
+| `mobile_vr` | 20,000 | 150,000 | 2048px |
+
+### Validation
+
+Check if your model is VR-ready:
+
+```
+validate_for_vr(
+    object_name="Chair",
+    platform="horizon_worlds"
+)
+```
+
+Returns warnings for poly count, texture size, and material issues.
+
+### Optimization
+
+Automatically optimize models:
+
+```
+optimize_for_vr(
+    object_name="Chair",
+    platform="horizon_worlds",
+    target_triangles=10000,
+    merge_by_distance=True
+)
+```
+
+### LOD Generation
+
+Create level-of-detail variants:
+
+```
+generate_lod_chain(
+    object_name="Chair",
+    lod_levels=[1.0, 0.5, 0.25, 0.1]
+)
+```
+
+### GLB Export
+
+Export optimized scenes:
+
+```
+export_vr_scene(
+    output_path="/path/to/scene.glb",
+    platform="horizon_worlds",
+    include_all_objects=True
+)
+```
+
+---
+
+## Poly Haven Integration
+
+Access thousands of free CC0 assets from [Poly Haven](https://polyhaven.com) — no API key required.
+
+### Search Assets
+
+```
+search_polyhaven(
+    query="brick",
+    asset_type="texture",
+    limit=10
+)
+```
+
+Asset types: `hdri`, `texture`, `model`
+
+### Download HDRI Lighting
+
+Apply realistic environment lighting:
+
+```
+download_polyhaven_hdri(
+    asset_id="industrial_sunset_02",
+    resolution="4k",
+    apply_to_scene=True
+)
+```
+
+### Download Textures
+
+Get complete PBR texture sets:
+
+```
+download_polyhaven_texture(
+    asset_id="brick_wall_02",
+    resolution="2k",
+    apply_to_object="Cube"
+)
+```
+
+### Download Models
+
+Import ready-to-use 3D models:
+
+```
+download_polyhaven_model(
+    asset_id="wooden_chair",
+    import_to_scene=True,
+    location=[0, 0, 0]
+)
+```
+
+### Browse Categories
+
+```
+list_polyhaven_categories(asset_type="textures")
+```
+
+All Poly Haven assets are **CC0 licensed** — free for any use, no attribution required.
 
 ---
 
