@@ -91,6 +91,15 @@ class AIConfig:
                 default_model="latest",
             )
 
+        # Stability AI (texture generation)
+        stability_key = os.getenv("STABILITY_API_KEY")
+        if stability_key:
+            self._configs["stability"] = ProviderConfig(
+                api_key=stability_key,
+                base_url="https://api.stability.ai/v2beta",
+                timeout=300,  # 5 min for image generation
+            )
+
     def _load_from_file(self, path: Path):
         """Load additional configuration from JSON file."""
         try:
