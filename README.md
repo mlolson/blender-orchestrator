@@ -1,375 +1,263 @@
 # Blender MCP Tools
 
-MCP (Model Context Protocol) server that allows Claude to create and edit 3D models in Blender.
+**Create 3D models in Blender using natural language.** This MCP server lets Claude directly control Blender, enabling you to build complex 3D scenes through conversation.
 
-## Architecture
+## Why Use This?
+
+- **Skip the learning curve**: Create 3D models without memorizing Blender shortcuts or navigating complex menus. Just describe what you want.
+- **AI-powered generation**: Generate 3D meshes from text descriptions or reference images using Meshy and Stability AI.
+- **Rapid prototyping**: Iterate on designs through conversation, getting immediate visual feedback.
+- **Automation**: Script complex modeling workflows without writing Blender Python code.
+- **Professional results**: Full access to Blender's rendering, materials, and mesh editing capabilities.
+
+## What Can You Build?
 
 ```
-Claude Code  <-->  MCP Server (Python)  <-->  Blender Add-on (HTTP Server)
+"Create a red metallic cube and a blue glass sphere next to it"
+"Generate a 3D model of a medieval sword"
+"Build a character using the cartoon template with purple eyes"
+"Create an organic sculpture using metaballs"
+"Apply a weathered stone texture to the wall"
+"Render the scene with dramatic lighting"
 ```
 
-- **Blender Add-on**: Runs an HTTP server inside Blender that exposes the Blender Python API
-- **MCP Server**: Connects to the Blender add-on and exposes tools to Claude
+## How It Works
 
-## Requirements
+```
+You (natural language) → Claude → MCP Server → Blender Add-on → Blender
+```
+
+1. You describe what you want in plain English
+2. Claude translates your request into structured tool calls
+3. The MCP server sends commands to a lightweight HTTP server running inside Blender
+4. Blender executes the operations and returns results
+5. Claude interprets the results and continues the conversation
+
+The system exposes 60+ tools covering primitives, transforms, mesh editing, materials, rendering, procedural generation, and AI-powered content creation.
+
+---
+
+## Quick Start
+
+### Requirements
 
 - Blender 4.0+
 - Python 3.10+
 - uv (recommended) or pip
 
-## Installation
+### Installation
 
-### 1. Install Python Dependencies
+**1. Install Python dependencies**
 
 ```bash
-cd /path/to/blender_tools
-uv venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+cd /path/to/blender-orchestrator
+uv venv && source .venv/bin/activate
 uv pip install -e .
 ```
 
-### 2. Install Blender Add-on
-
-Option A - Using the install script (recommended):
+**2. Install the Blender add-on**
 
 ```bash
 python scripts/install_addon.py
 ```
 
-Option B - Manual installation:
+Or manually: Blender → Edit → Preferences → Add-ons → Install → select `blender_addon` folder → enable "Blender MCP Bridge"
 
-1. Open Blender
-2. Go to Edit > Preferences > Add-ons
-3. Click "Install..."
-4. Navigate to the `blender_addon` folder and select it
-5. Enable "Blender MCP Bridge" in the add-ons list
+**3. Configure Claude**
 
-### 3. Configure Claude Code
-
-Add the MCP server to your Claude configuration.
-
-**For Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
 ```json
 {
-    "mcpServers": {
-        "blender": {
-            "command": "uv",
-            "args": [
-                "--directory",
-                "/path/to/blender_tools",
-                "run",
-                "blender-mcp"
-            ]
-        }
+  "mcpServers": {
+    "blender": {
+      "command": "uv",
+      "args": ["--directory", "/path/to/blender-orchestrator", "run", "blender-mcp"]
     }
-}
-```
-
-**For Claude Code CLI** (`.claude/settings.json`):
-
-```json
-{
-    "mcpServers": {
-        "blender": {
-            "command": "uv",
-            "args": [
-                "--directory",
-                "/path/to/blender_tools",
-                "run",
-                "blender-mcp"
-            ]
-        }
-    }
-}
-```
-
-## Usage
-
-1. **Start Blender** and open/create a scene
-
-2. **Start the MCP server in Blender**:
-   - Press `N` in the 3D Viewport to open the sidebar
-   - Find the "MCP" tab
-   - Click "Start Server"
-   - You should see "Server running on port 8765"
-
-3. **Use Claude** to interact with Blender:
-   ```
-   "Create a red cube at position (2, 0, 0)"
-   "List all objects in the scene"
-   "Take a viewport screenshot"
-   "Create a metallic gold sphere and place it next to the cube"
-   ```
-
-## Available Tools
-
-### Primitives
-- `create_cube` - Create a cube
-- `create_sphere` - Create a UV sphere
-- `create_cylinder` - Create a cylinder
-- `create_cone` - Create a cone
-- `create_torus` - Create a torus (donut)
-- `create_plane` - Create a plane
-
-### Transforms
-- `move_object` - Move an object
-- `rotate_object` - Rotate an object
-- `scale_object` - Scale an object
-- `duplicate_object` - Duplicate an object
-- `delete_object` - Delete an object
-- `set_origin` - Set object origin point
-
-### Mesh Editing
-- `extrude_faces` - Extrude faces along normals
-- `bevel_edges` - Bevel edges
-- `boolean_operation` - Boolean operations (union, difference, intersect)
-- `subdivide_mesh` - Subdivide mesh
-- `add_subdivision_surface` - Add subdivision surface modifier
-- `inset_faces` - Inset faces
-- `smooth_mesh` - Smooth mesh vertices
-
-### Materials
-- `create_material` - Create a PBR material
-- `assign_material` - Assign material to object
-- `modify_material` - Modify material properties
-- `list_materials` - List all materials
-- `create_and_assign_material` - Create and assign in one step
-- `delete_material` - Delete a material
-
-### Rendering
-- `render_image` - Render scene to file
-- `capture_viewport` - Capture viewport screenshot (fast)
-- `set_render_settings` - Configure render settings
-- `get_render_settings` - Get current render settings
-
-### Scene Management
-- `list_objects` - List all objects
-- `get_object_info` - Get detailed object info
-- `get_scene_summary` - Get scene summary
-- `get_selected_objects` - Get selected objects
-- `select_object` - Select an object
-- `deselect_all` - Deselect all objects
-- `set_object_visibility` - Show/hide objects
-- `set_parent` - Set object parent
-- `check_blender_connection` - Check if Blender is connected
-
-### AI Mesh Generation
-- `generate_mesh_from_text` - Generate 3D mesh from text description
-- `generate_mesh_from_image` - Generate 3D mesh from reference image
-- `import_mesh_file` - Import mesh file (GLB, OBJ, FBX, PLY, STL)
-- `list_mesh_generation_providers` - Show available AI providers
-
-### AI Texture Generation
-- `generate_texture` - Generate texture from text description
-- `generate_pbr_material_textures` - Generate complete PBR material
-- `apply_texture_to_object` - Apply texture file to object
-- `list_texture_generation_providers` - Show available AI providers
-
----
-
-## AI-Powered Generation
-
-Generate 3D meshes and textures using cloud AI APIs from Meshy and Stability AI.
-
-### Configuration
-
-Set environment variables for the AI providers you want to use:
-
-```bash
-# For Meshy (text-to-3D and image-to-3D)
-export MESHY_API_KEY="msy_your_key_here"
-
-# For Stability AI (image-to-3D and textures)
-export STABILITY_API_KEY="sk-your_key_here"
-```
-
-Or create a config file at `~/.config/blender-mcp/ai_providers.json`:
-
-```json
-{
-  "meshy": {
-    "api_key": "msy_your_key_here",
-    "timeout": 600
-  },
-  "stability": {
-    "api_key": "sk-your_key_here",
-    "timeout": 300
   }
 }
 ```
 
-### Mesh Generation
+For Claude Code CLI, add the same to `.claude/settings.json`.
 
-#### Available Models
+### Usage
 
-| Provider | Model | Input Type | Description |
-|----------|-------|------------|-------------|
-| Meshy | `latest` (Meshy-6) | Text or Image | Best quality, recommended |
-| Meshy | `meshy-5` | Text or Image | Previous generation |
-| Stability | `stable-fast-3d` | Image only | Stability's image-to-3D |
+1. Open Blender
+2. Press `N` in the 3D Viewport → MCP tab → Click "Start Server"
+3. Start talking to Claude about your 3D scene
 
-#### Text-to-3D
+---
 
-Generate a 3D mesh from a text description:
+## Features
+
+### Primitives & Transforms
+
+Create and manipulate basic shapes with full control over position, rotation, and scale.
+
+| Tool | Description |
+|------|-------------|
+| `create_cube`, `create_sphere`, `create_cylinder`, `create_cone`, `create_torus`, `create_plane` | Create primitive shapes |
+| `move_object`, `rotate_object`, `scale_object` | Transform objects (absolute or relative) |
+| `duplicate_object`, `delete_object` | Copy or remove objects |
+| `set_origin`, `set_parent` | Control object origin and hierarchy |
+
+### Mesh Editing
+
+Modify geometry with professional modeling operations.
+
+| Tool | Description |
+|------|-------------|
+| `extrude_faces` | Extrude faces along normals |
+| `bevel_edges` | Add bevels with configurable segments |
+| `boolean_operation` | Union, difference, or intersect meshes |
+| `subdivide_mesh`, `add_subdivision_surface` | Increase mesh resolution |
+| `inset_faces`, `smooth_mesh` | Topology and smoothing operations |
+
+### Procedural Generation
+
+Create complex organic and geometric forms.
+
+| Tool | Description |
+|------|-------------|
+| `create_metaball`, `add_metaball_element` | Organic blob-like shapes that blend together |
+| `create_bezier_curve`, `curve_to_mesh` | Spline-based modeling |
+| `create_skin_mesh` | Generate smooth surfaces from edge skeletons |
+| `create_character_from_template` | Pre-built character rigs (realistic, cartoon, chibi) |
+
+### Materials & Textures
+
+Full PBR material support with AI-powered texture generation.
+
+| Tool | Description |
+|------|-------------|
+| `create_material`, `assign_material`, `modify_material` | PBR material workflow |
+| `generate_texture` | AI-generated textures from text |
+| `generate_pbr_material_textures` | Complete material sets (diffuse, normal, roughness, metallic) |
+
+### Rendering & Visualization
+
+| Tool | Description |
+|------|-------------|
+| `render_image` | Full render to file (EEVEE, Cycles, Workbench) |
+| `capture_viewport` | Quick viewport screenshot |
+| `set_render_settings`, `get_render_settings` | Configure resolution, samples, format |
+
+### Scene Management
+
+| Tool | Description |
+|------|-------------|
+| `list_objects`, `get_object_info`, `get_scene_summary` | Query scene state |
+| `select_object`, `deselect_all`, `set_object_visibility` | Selection and visibility |
+| `check_blender_connection` | Verify server status |
+
+### AI-Powered 3D Generation
+
+Generate complete 3D models from text or images using cloud AI APIs.
+
+| Tool | Description |
+|------|-------------|
+| `generate_mesh_from_text` | Text-to-3D model generation |
+| `generate_mesh_from_image` | Image-to-3D model generation |
+| `import_mesh_file` | Import GLB, OBJ, FBX, PLY, STL |
+
+---
+
+## AI Generation Setup
+
+Generate 3D meshes and textures using Meshy and Stability AI.
+
+### Configuration
+
+Set API keys via environment variables:
+
+```bash
+export MESHY_API_KEY="msy_your_key_here"
+export STABILITY_API_KEY="sk-your_key_here"
+```
+
+Or create `~/.config/blender-mcp/ai_providers.json`:
+
+```json
+{
+  "meshy": { "api_key": "msy_your_key_here", "timeout": 600 },
+  "stability": { "api_key": "sk-your_key_here", "timeout": 300 }
+}
+```
+
+### Available Models
+
+| Provider | Capability | Notes |
+|----------|------------|-------|
+| Meshy | Text-to-3D, Image-to-3D | Best quality, multiple art styles |
+| Stability | Image-to-3D, Textures | Fast generation |
+
+### Text-to-3D Examples
 
 ```
-generate_mesh_from_text(
-    prompt="a wooden chair",
-    provider="meshy",
-    art_style="realistic",
-    refine=True,
-    import_to_scene=True,
-    location=[0, 0, 0],
-    name="Chair"
-)
+"Generate a wooden treasure chest"
+"Create a cartoon dog in the scene"
+"Make a realistic medieval castle tower"
 ```
 
 Art styles: `realistic`, `cartoon`, `sculpture`, `pbr`
 
-Example prompts:
-- "a medieval castle tower"
-- "a red sports car"
-- "a cartoon dog"
-- "a wooden treasure chest"
+### Image-to-3D Tips
 
-#### Image-to-3D
-
-Generate a 3D mesh from a reference image:
-
-```
-generate_mesh_from_image(
-    image_path="/path/to/photo.png",
-    provider="meshy",
-    import_to_scene=True,
-    location=[0, 0, 0],
-    name="MyModel"
-)
-```
-
-Tips for best results:
-- Use images with a single object on a clean/white background
-- Ensure the object is well-lit and centered
-- Avoid cluttered backgrounds
-
-### Texture Generation
-
-#### Single Texture
-
-Generate a texture map:
-
-```
-generate_texture(
-    prompt="weathered wood planks",
-    texture_type="diffuse",
-    resolution=1024,
-    seamless=True,
-    provider="stability",
-    apply_to_object="Cube"
-)
-```
-
-Texture types: `diffuse`, `normal`, `roughness`, `metallic`, `ambient_occlusion`
-
-#### Complete PBR Material
-
-Generate multiple texture maps for a full PBR material:
-
-```
-generate_pbr_material_textures(
-    prompt="rusty corroded metal",
-    apply_to_object="Cube",
-    include_normal=True,
-    include_roughness=True,
-    include_metallic=True,
-    resolution=1024,
-    provider="stability"
-)
-```
-
-Example prompts:
-- "cobblestone path"
-- "brushed aluminum"
-- "mossy stone wall"
-- "worn leather"
-- "sci-fi metal panels"
+- Use images with a single object on a clean background
+- Ensure good lighting and centered composition
+- Avoid cluttered scenes
 
 ### API Costs
 
-AI generation uses paid APIs:
-- **Meshy**: Credit-based, ~20 credits per generation. See [meshy.ai/pricing](https://www.meshy.ai/pricing)
-- **Stability AI**: Credit-based, varies by model
-
-Check provider websites for current pricing.
+Both providers use credit-based pricing. See [meshy.ai/pricing](https://www.meshy.ai/pricing) and Stability AI documentation.
 
 ---
 
-## Testing the Connection
-
-You can test if the Blender server is running:
-
-```bash
-# Health check
-curl http://localhost:8765/health
-
-# Test an action
-curl -X POST http://localhost:8765 \
-  -H "Content-Type: application/json" \
-  -d '{"action": "list_objects", "params": {}}'
-```
-
 ## Troubleshooting
 
-### "Cannot connect to Blender server"
-- Make sure Blender is running
-- Make sure the MCP Bridge add-on is enabled
-- Make sure you clicked "Start Server" in the MCP panel
-- Check that port 8765 is not in use by another application
+**"Cannot connect to Blender server"**
+- Ensure Blender is running with the MCP Bridge add-on enabled
+- Click "Start Server" in the MCP panel (press `N` → MCP tab)
+- Check that port 8765 is available
 
-### "Object not found"
-- Object names in Blender are case-sensitive
-- Use `list_objects` to see exact object names
+**"Object not found"**
+- Object names are case-sensitive
+- Use `list_objects` to see exact names
 
-### Server not starting
-- Check Blender's console for error messages
-- Try a different port if 8765 is in use
+**Test the connection manually:**
 
-## Development
+```bash
+curl http://localhost:8765/health
+```
 
-### Project Structure
+---
+
+## Architecture
 
 ```
-blender_tools/
-├── blender_addon/          # Blender add-on
-│   ├── __init__.py         # Add-on registration
-│   ├── server/             # HTTP server
-│   ├── handlers/           # Blender operation handlers
-│   │   ├── mesh_import.py      # AI mesh import handlers
-│   │   └── texture_application.py  # Texture application handlers
-│   ├── operators/          # Blender operators
-│   └── utils/              # Utilities
+blender-orchestrator/
+├── blender_addon/          # Blender add-on (HTTP server + handlers)
+│   ├── server/             # Non-blocking HTTP server
+│   ├── handlers/           # Operation implementations
+│   └── templates/          # Character templates
 │
 ├── mcp_server/             # MCP server
-│   ├── server.py           # FastMCP server
-│   ├── blender_client.py   # HTTP client
-│   ├── tools/              # MCP tool definitions
-│   │   ├── ai_mesh_generation.py    # AI mesh generation tools
-│   │   └── ai_texture_generation.py # AI texture generation tools
-│   └── ai_clients/         # AI provider clients
-│       ├── base.py             # Abstract base classes
-│       ├── config.py           # API key management
-│       ├── meshy_client.py     # Meshy API client
-│       └── stability_client.py # Stability AI client
+│   ├── server.py           # FastMCP entry point
+│   ├── blender_client.py   # HTTP client for Blender communication
+│   ├── tools/              # Tool definitions (one module per category)
+│   └── ai_clients/         # AI provider implementations
 │
-└── scripts/                # Helper scripts
+└── scripts/                # Installation helpers
 ```
 
 ### Adding New Tools
 
-1. Add handler in `blender_addon/handlers/`
-2. Register handler in `blender_addon/handlers/__init__.py`
-3. Add MCP tool in `mcp_server/tools/`
-4. Register tool module in `mcp_server/tools/__init__.py`
+1. Create handler in `blender_addon/handlers/`
+2. Register in `blender_addon/handlers/__init__.py`
+3. Create MCP tool in `mcp_server/tools/`
+4. Register in `mcp_server/tools/__init__.py`
+
+---
 
 ## License
 
