@@ -277,37 +277,43 @@ class PolyHavenClient:
         output_dir: Optional[str] = None,
     ) -> DownloadResult:
         """Download a 3D model asset.
-        
+
         Args:
             asset_id: The asset ID
             file_format: Format (gltf, fbx, blend)
             resolution: Texture resolution for the model
             output_dir: Directory to save to
-            
+
         Returns:
             DownloadResult with local path
         """
         files = await self.get_asset_files(asset_id)
-        
+
         # Navigate to model files
+        # Structure is: files[format][resolution][format]['url']
         format_data = files.get(file_format, {})
         res_data = format_data.get(resolution, {})
-        
-        url = res_data.get("url")
-        if not url and file_format in format_data:
-            # Some models have the URL directly
-            url = format_data[file_format].get("url")
+        inner_data = res_data.get(file_format, {})
+
+        url = inner_data.get("url")
 
         if not url:
-            # Fallback
-            ext = "glb" if file_format == "gltf" else file_format
-            url = f"{self.CDN_URL}/Models/{asset_id}/{file_format}/{asset_id}_{resolution}.{ext}"
+            # Fallback: try the old structure (in case API changes)
+            url = res_data.get("url")
+
+        if not url:
+            raise ValueError(f"Could not find download URL for {asset_id} in {file_format} format at {resolution} resolution")
+
+        # Determine the correct file extension
+        ext = file_format
+        if file_format == "gltf":
+            ext = "gltf"  # Not glb - Poly Haven uses .gltf files
 
         return await self._download_file(
             url=url,
             asset_id=asset_id,
             asset_type="model",
-            file_format=file_format,
+            file_format=ext,
             resolution=resolution,
             output_dir=output_dir,
         )
