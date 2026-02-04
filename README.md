@@ -1,41 +1,18 @@
-# Blender MCP Tools
+# Agentic Blender Orchestrator 
 
-**Create 3D models in Blender using natural language.** This MCP server lets Claude directly control Blender, enabling you to build complex 3D scenes through conversation.
+MCP tooling suite for creation of 3D scenes, with plug-innable mesh and image generation service integration. 
+
+**Create 3D models in Blender using natural language.** MCP server lets agent directly control Blender, enabling you to build complex 3D scenes through conversation. 
+
+**Seamless integration with mesh and image generation services** 
+Plug in the API keys to mesh generation services like meshy, or image generation service like stability, Replicate, or Leonardo.ai. The agent can make use of them via standardized MCP APIs.
 
 ## Why Use This?
 
-- **Skip the learning curve**: Create 3D models without memorizing Blender shortcuts or navigating complex menus. Just describe what you want.
 - **AI-powered generation**: Generate 3D meshes from text descriptions or reference images using Meshy and Stability AI.
 - **Rapid prototyping**: Iterate on designs through conversation, getting immediate visual feedback.
 - **Automation**: Script complex modeling workflows without writing Blender Python code.
-- **Professional results**: Full access to Blender's rendering, materials, and mesh editing capabilities.
 
-## What Can You Build?
-
-```
-"Create a red metallic cube and a blue glass sphere next to it"
-"Generate a 3D model of a medieval sword"
-"Build a character using the cartoon template with purple eyes"
-"Create an organic sculpture using metaballs"
-"Apply a weathered stone texture to the wall"
-"Render the scene with dramatic lighting"
-```
-
-## How It Works
-
-```
-You (natural language) → Claude → MCP Server → Blender Add-on → Blender
-```
-
-1. You describe what you want in plain English
-2. Claude translates your request into structured tool calls
-3. The MCP server sends commands to a lightweight HTTP server running inside Blender
-4. Blender executes the operations and returns results
-5. Claude interprets the results and continues the conversation
-
-The system exposes 60+ tools covering primitives, transforms, mesh editing, materials, rendering, procedural generation, and AI-powered content creation.
-
----
 
 ## Quick Start
 
@@ -63,9 +40,9 @@ python scripts/install_addon.py
 
 Or manually: Blender → Edit → Preferences → Add-ons → Install → select `blender_addon` folder → enable "Blender MCP Bridge"
 
-**3. Configure Claude**
+**3. Configure Agent**
 
-Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Add to your Agent Desktop config (`~/Library/Application Support/Agent/Agent_desktop_config.json` on macOS):
 
 ```json
 {
@@ -78,7 +55,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
 }
 ```
 
-For Claude Code CLI, add the same to `.claude/settings.json`.
+For Calide Code CLI, add the same to `.claude/settings.json`.
 
 ### Usage
 
