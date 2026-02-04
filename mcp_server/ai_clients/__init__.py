@@ -36,13 +36,19 @@ def _register_providers():
         description="Meshy AI - High quality text and image to 3D generation",
     )
 
-    # Future providers will be registered here:
-    # registry.register_texture_provider(
-    #     name="stability",
-    #     provider_class=StabilityClient,
-    #     capabilities=[...],
-    #     description="Stability AI - Texture generation",
-    # )
+    # Register Replicate for texture generation
+    from .replicate_client import ReplicateClient
+
+    registry.register_texture_provider(
+        name="replicate",
+        provider_class=ReplicateClient,
+        capabilities=[
+            TextureCapability.TEXT_TO_TEXTURE,
+            TextureCapability.SEAMLESS_GENERATION,
+            TextureCapability.PBR_MAPS,
+        ],
+        description="Replicate AI - Texture generation via SDXL and specialized models",
+    )
 
 
 # Register providers on module import

@@ -167,7 +167,7 @@ Access thousands of free CC0 assets from [Poly Haven](https://polyhaven.com).
 
 ## AI Generation Setup
 
-Generate 3D meshes and textures using Meshy and Stability AI.
+Generate 3D meshes using Meshy and textures using Replicate.
 
 ### Configuration
 
@@ -175,7 +175,7 @@ Set API keys via environment variables:
 
 ```bash
 export MESHY_API_KEY="msy_your_key_here"
-export STABILITY_API_KEY="sk-your_key_here"
+export REPLICATE_API_TOKEN="r8_your_token_here"
 ```
 
 Or create `~/.config/blender-mcp/ai_providers.json`:
@@ -183,16 +183,16 @@ Or create `~/.config/blender-mcp/ai_providers.json`:
 ```json
 {
   "meshy": { "api_key": "msy_your_key_here", "timeout": 600 },
-  "stability": { "api_key": "sk-your_key_here", "timeout": 300 }
+  "replicate": { "api_key": "r8_your_token_here", "timeout": 300 }
 }
 ```
 
-### Available Models
+### Available Providers
 
 | Provider | Capability | Notes |
 |----------|------------|-------|
 | Meshy | Text-to-3D, Image-to-3D | Best quality, multiple art styles |
-| Stability | Image-to-3D, Textures | Fast generation |
+| Replicate | Texture generation | Pay-per-use (~$0.002/image), SDXL and specialized models |
 
 ### Text-to-3D Examples
 
@@ -212,7 +212,8 @@ Art styles: `realistic`, `cartoon`, `sculpture`, `pbr`
 
 ### API Costs
 
-Both providers use credit-based pricing. See [meshy.ai/pricing](https://www.meshy.ai/pricing) and Stability AI documentation.
+- **Meshy**: Credit-based, ~20 credits per generation. See [meshy.ai/pricing](https://www.meshy.ai/pricing)
+- **Replicate**: Pay-per-use, ~$0.002 per texture. See [replicate.com/pricing](https://replicate.com/pricing)
 
 ---
 

@@ -91,6 +91,15 @@ class AIConfig:
                 default_model="latest",
             )
 
+        # Replicate (texture generation)
+        replicate_key = os.getenv("REPLICATE_API_TOKEN")
+        if replicate_key:
+            self._configs["replicate"] = ProviderConfig(
+                api_key=replicate_key,
+                base_url="https://api.replicate.com/v1",
+                timeout=300,  # 5 min for texture generation
+            )
+
     def _load_from_file(self, path: Path):
         """Load additional configuration from JSON file."""
         try:
