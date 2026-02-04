@@ -111,3 +111,40 @@ def register_tools(mcp, client):
             lines.append(f"  Denoising: {result['use_denoising']}")
 
         return "\n".join(lines)
+
+    @mcp.tool()
+    async def set_world_hdri(
+        hdri_path: str,
+        strength: float = 1.0,
+        rotation: float = 0.0,
+    ) -> str:
+        """Set an HDRI image as world environment lighting.
+
+        HDRIs provide realistic lighting from all directions, perfect for
+        product visualization and realistic renders.
+
+        Args:
+            hdri_path: Path to the HDRI file (.hdr or .exr)
+            strength: Light intensity multiplier (default: 1.0)
+            rotation: Z-axis rotation in degrees (default: 0)
+
+        Returns:
+            Confirmation of HDRI application
+        """
+        result = await client.execute(
+            "set_world_hdri",
+            {
+                "hdri_path": hdri_path,
+                "strength": strength,
+                "rotation": rotation,
+            },
+        )
+
+        if "error" in result:
+            return f"Error: {result['error']}"
+
+        output = f"🌅 Applied HDRI to world lighting\n"
+        output += f"File: {result['hdri']}\n"
+        output += f"Strength: {result['strength']}\n"
+        output += f"Rotation: {result['rotation']}°"
+        return output
