@@ -11,6 +11,7 @@ from .mesh_import import MESH_IMPORT_HANDLERS
 from .texture_application import TEXTURE_APPLICATION_HANDLERS
 from .spatial import SPATIAL_HANDLERS
 from .lighting import LIGHTING_HANDLERS
+from .camera import CAMERA_HANDLERS
 from ..templates import TEMPLATE_HANDLERS
 
 
@@ -35,4 +36,6 @@ def get_handler_registry():
     registry.update(SPATIAL_HANDLERS)
     # Lighting handlers
     registry.update(LIGHTING_HANDLERS)
+    # Camera handlers
+    registry.update(CAMERA_HANDLERS)
     return registry

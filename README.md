@@ -135,6 +135,19 @@ Create and control lights for realistic or stylized scene illumination.
 | `set_light_properties` | Modify existing light settings |
 | `get_light_info`, `list_lights` | Query light information |
 
+### Cameras
+
+Create and position cameras for rendering and visualization.
+
+| Tool | Description |
+|------|-------------|
+| `create_camera` | Create perspective, orthographic, or panoramic camera |
+| `set_active_camera` | Set which camera is used for rendering |
+| `look_at` | Point camera at a target object or location |
+| `frame_objects` | Auto-position camera to frame objects nicely |
+| `set_camera_properties` | Adjust lens, DOF, clipping, etc. |
+| `get_camera_info`, `list_cameras` | Query camera information |
+
 ### Scene Management
 
 | Tool | Description |
