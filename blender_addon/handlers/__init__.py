@@ -9,6 +9,7 @@ from .curves import CURVE_HANDLERS
 from .skinning import SKINNING_HANDLERS
 from .mesh_import import MESH_IMPORT_HANDLERS
 from .texture_application import TEXTURE_APPLICATION_HANDLERS
+from .spatial import SPATIAL_HANDLERS
 from ..templates import TEMPLATE_HANDLERS
 
 
@@ -29,4 +30,6 @@ def get_handler_registry():
     registry.update(MESH_IMPORT_HANDLERS)
     registry.update(TEXTURE_APPLICATION_HANDLERS)
     registry.update(TEMPLATE_HANDLERS)
+    # Spatial reasoning handlers
+    registry.update(SPATIAL_HANDLERS)
     return registry
