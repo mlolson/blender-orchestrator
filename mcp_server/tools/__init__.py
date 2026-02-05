@@ -13,6 +13,7 @@ from . import templates
 from . import ai_mesh_generation
 from . import polyhaven
 from . import ai_texture_generation
+from . import spatial
 
 
 def register_all_tools(mcp, client):
@@ -33,3 +34,5 @@ def register_all_tools(mcp, client):
     # Free asset library tools
     polyhaven.register_tools(mcp, client)
     ai_texture_generation.register_tools(mcp, client)
+    # Spatial reasoning tools
+    spatial.register_tools(mcp, client)
