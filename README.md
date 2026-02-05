@@ -122,6 +122,19 @@ Full PBR material support with AI-powered texture generation.
 | `set_render_settings`, `get_render_settings` | Configure resolution, samples, format |
 | `set_world_hdri` | Apply HDRI environment lighting |
 
+### Lighting
+
+Create and control lights for realistic or stylized scene illumination.
+
+| Tool | Description |
+|------|-------------|
+| `create_point_light` | Omnidirectional light (light bulbs, lanterns) |
+| `create_sun_light` | Directional light for outdoor scenes |
+| `create_spot_light` | Cone-shaped focused light (flashlight, stage light) |
+| `create_area_light` | Soft rectangular/disk light (softboxes, panels) |
+| `set_light_properties` | Modify existing light settings |
+| `get_light_info`, `list_lights` | Query light information |
+
 ### Scene Management
 
 | Tool | Description |

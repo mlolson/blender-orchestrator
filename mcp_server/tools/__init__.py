@@ -14,6 +14,7 @@ from . import ai_mesh_generation
 from . import polyhaven
 from . import ai_texture_generation
 from . import spatial
+from . import lighting
 
 
 def register_all_tools(mcp, client):
@@ -36,3 +37,5 @@ def register_all_tools(mcp, client):
     ai_texture_generation.register_tools(mcp, client)
     # Spatial reasoning tools
     spatial.register_tools(mcp, client)
+    # Lighting tools
+    lighting.register_tools(mcp, client)
