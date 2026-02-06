@@ -37,21 +37,31 @@ def register_tools(mcp, client):
     async def assign_material(
         object_name: str,
         material_name: str,
+        slot_index: Optional[int] = None,
+        all_slots: bool = False,
     ) -> str:
         """Assign an existing material to an object.
 
         Args:
             object_name: Name of the object
             material_name: Name of the material to assign
+            slot_index: Material slot index to assign to (default: 0). Ignored if all_slots=True.
+            all_slots: If True, replace the material on ALL material slots of the object.
+                       Useful for imported models with multiple material slots (e.g. Poly Haven FBX).
         """
-        result = await client.execute(
-            "assign_material",
-            {
-                "object_name": object_name,
-                "material_name": material_name,
-            },
-        )
-        return f"Assigned material '{result['material']}' to '{result['object']}'"
+        params = {
+            "object_name": object_name,
+            "material_name": material_name,
+            "all_slots": all_slots,
+        }
+        if slot_index is not None:
+            params["slot_index"] = slot_index
+
+        result = await client.execute("assign_material", params)
+
+        if all_slots:
+            return f"Assigned material '{result['material']}' to all {result.get('slots_replaced', '?')} slots of '{result['object']}'"
+        return f"Assigned material '{result['material']}' to '{result['object']}' (slot {result.get('slot_index', 0)})"
 
     @mcp.tool()
     async def modify_material(

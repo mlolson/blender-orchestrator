@@ -40,6 +40,7 @@ def assign_material(params: Dict[str, Any]) -> Dict[str, Any]:
     object_name = params["object_name"]
     material_name = params["material_name"]
     slot_index = params.get("slot_index", 0)
+    all_slots = params.get("all_slots", False)
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -49,7 +50,23 @@ def assign_material(params: Dict[str, Any]) -> Dict[str, Any]:
     if not mat:
         raise ValueError(f"Material '{material_name}' not found")
 
-    # Ensure object has material slots
+    if all_slots:
+        # Replace material on every existing slot
+        if len(obj.material_slots) == 0:
+            obj.data.materials.append(mat)
+            slots_replaced = 1
+        else:
+            slots_replaced = len(obj.material_slots)
+            for i in range(slots_replaced):
+                obj.material_slots[i].material = mat
+        return {
+            "object": object_name,
+            "material": material_name,
+            "all_slots": True,
+            "slots_replaced": slots_replaced,
+        }
+
+    # Single slot assignment (original behavior)
     if len(obj.material_slots) == 0:
         obj.data.materials.append(mat)
     else:

@@ -105,7 +105,7 @@ def boolean_operation(params: Dict[str, Any]) -> Dict[str, Any]:
     mod = target.modifiers.new(name="Boolean", type="BOOLEAN")
     mod.operation = operation
     mod.object = tool
-    mod.solver = "FAST"
+    mod.solver = "EXACT"
 
     if apply_modifier:
         bpy.ops.object.select_all(action="DESELECT")
