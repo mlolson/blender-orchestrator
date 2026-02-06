@@ -1,17 +1,13 @@
 # Agentic Blender Orchestrator
 
-**The most capable AI-to-Blender bridge available.** Give your AI agent full control over Blender — from creating primitives to building spatially-aware furnished rooms, complete with lighting, cameras, and real-world object dimensions.
-
-This isn't just "create a cube." It's an AI that understands spatial relationships, knows that a dining table is 0.75m tall, can check for collisions before placing furniture, and gives you an ASCII floor plan of the result.
-
-> 🎯 **Built for [Meta Horizon Worlds](https://www.meta.com/horizon-worlds/) creators** — with VR optimization, LOD generation, and platform-specific export built in.
+Create 3D models in Blender using natural language. MCP server lets agent directly control Blender, enabling you to build complex 3D scenes through conversation. Scene comprehension tooling and skills gives LLM improved spatial awareness for better results.
 
 ---
 
 ## 🔥 What's New
 
 ### 🧠 Spatial Intelligence Suite
-The AI doesn't just place objects — it *understands* space.
+Spatial intelligence suite helps AI understand space.
 
 - **Natural language positioning** — Say "place the lamp on the nightstand" and it figures out the coordinates, checks for collisions, and handles stacking.
 - **Real-world dimensions database** — 55+ common objects (furniture, appliances, decor) with accurate real-world measurements. The AI knows a kitchen counter is 0.9m tall and a doorway is 2.1m × 0.9m.
@@ -20,7 +16,7 @@ The AI doesn't just place objects — it *understands* space.
 - **Scene Building Guide** — A comprehensive [reference doc](docs/SCENE_BUILDING_GUIDE.md) that AI agents can read before building a scene, covering room dimensions, placement rules, common mistakes, and worked examples.
 
 ### 🗺️ Multi-View ASCII Floor Plans
-Visualize your entire scene as ASCII art from **any angle** — top, bottom, front, back, left, right, or all six at once. Configurable resolution up to 120×120 cells. This gives the AI (and you) a bird's-eye view of the layout for reasoning about placement and composition.
+ASCII visualizer tool gives the LLM a way to understand spatial relationships between objects. Renders the scene from any angle — top, bottom, front, back, left, right, or all six at once. Configurable resolution up to 120×120 cells.
 
 ```
 --- Top (looking down, +Z) ---
