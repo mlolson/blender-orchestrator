@@ -4,6 +4,26 @@ Create 3D models in Blender using natural language. MCP server lets agent direct
 
 ---
 
+## Agent Skill
+
+The `skill/` directory contains an [AgentSkill](https://docs.openclaw.ai) that teaches AI agents how to use the tooling effectively. It covers the complete workflow — from room creation through spatial placement, lighting, cameras, and rendering — with concrete examples for every tool.
+
+**To install the skill**, copy or symlink the `skill/` directory into your agent's skill path:
+
+```bash
+# OpenClaw
+cp -r skill/ ~/.openclaw/workspace/skills/blender-orchestrator
+
+# Or symlink it
+ln -s /path/to/blender-orchestrator/skill ~/.openclaw/workspace/skills/blender-orchestrator
+```
+
+The skill includes:
+- **SKILL.md** — Core instructions covering all tools, spatial workflow, and common mistakes to avoid
+- **references/scene-building-guide.md** — Detailed guide for building realistic interior scenes with worked examples
+
+---
+
 ## Features
 
 ### 🧠 Spatial Intelligence Suite
