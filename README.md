@@ -1,23 +1,65 @@
-# Agentic Blender Orchestrator 
+# Agentic Blender Orchestrator
 
-MCP tooling suite for creation of 3D scenes, with plug-innable mesh and image generation service integration. 
+Create 3D models in Blender using natural language. MCP server lets agent directly control Blender, enabling you to build complex 3D scenes through conversation. Scene comprehension tooling and skills gives LLM improved spatial awareness for better results.
 
-**Create 3D models in Blender using natural language.** MCP server lets agent directly control Blender, enabling you to build complex 3D scenes through conversation. 
+---
 
-**Seamless integration with mesh and image generation services** 
-Plug in the API keys to mesh generation services like meshy, or image generation service like stability, Replicate, or Leonardo.ai. The agent can make use of them via standardized MCP APIs.
+## 🔥 What's New
 
-## 📖 Scene Building Guide
+### 🧠 Spatial Intelligence Suite
+Spatial intelligence suite helps AI understand space.
 
-New to building 3D scenes with AI? Read the **[Scene Building Guide](docs/SCENE_BUILDING_GUIDE.md)** — a comprehensive reference covering room dimensions, object placement rules, spatial calculations, common mistakes, and complete worked examples. It's designed to be read by AI agents before building a scene.
+- **Natural language positioning** — Say "place the lamp on the nightstand" and it figures out the coordinates, checks for collisions, and handles stacking.
+- **Real-world dimensions database** — 55+ common objects (furniture, appliances, decor) with accurate real-world measurements. The AI knows a kitchen counter is 0.9m tall and a doorway is 2.1m × 0.9m.
+- **Collision detection & safe movement** — Validate transforms before applying them. Query how far an object can move in each direction without hitting anything.
+- **Spatial queries** — Ask "what's on the table?" or "what's near the door?" and get answers.
+- **Scene Building Guide** — A comprehensive [reference doc](docs/SCENE_BUILDING_GUIDE.md) that AI agents can read before building a scene, covering room dimensions, placement rules, common mistakes, and worked examples.
+
+### 🗺️ Multi-View ASCII Floor Plans
+ASCII visualizer tool gives the LLM a way to understand spatial relationships between objects. Renders the scene from any angle — top, bottom, front, back, left, right, or all six at once. Configurable resolution up to 120×120 cells.
+
+```
+--- Top (looking down, +Z) ---
+Axes: horizontal=X, vertical=Y | 5.3m x 4.3m (cell: 0.25m, grid: 21x17)
+
+WWWWWWWWWWWWWWWWWWWWW
+W...................W
+W...................W
+W..TTTTTT..........W
+W..TTTTTT..........W
+W..TTTTTT....SS....W
+W............SS....W
+W...................W
+W.......CCCC.......W
+W.......CCCC.......W
+W...................W
+WWWWWWWWWWWWWWWWWWWWW
+
+Legend: C=Couch, S=Shelf, T=Table, W=Wall_Back
+```
+
+### 💡 Complete Lighting System
+Full control over all four Blender light types — point, sun, spot, and area lights. Set color, intensity, shadow properties, cone angles, and more. Previously only HDRI environment lighting was available; now you can build precise studio setups, dramatic spotlights, or warm interior scenes.
+
+### 📷 Camera Tools
+Create perspective, orthographic, and panoramic cameras. Auto-frame objects for product shots. Set depth of field, adjust lens focal length, and control clipping planes. Essential for rendering composed shots of your scenes.
+
+### 🏠 Room Creation
+One command creates a properly dimensioned room with floor and four walls. Specify width, depth, height, and wall thickness — then start furnishing. Combined with the dimensions database and spatial tools, the AI can furnish a realistic room from a single prompt.
+
+### 🌍 Poly Haven Integration
+Access **thousands of free CC0 assets** from [Poly Haven](https://polyhaven.com) — no API key needed. Download HDRIs for environment lighting, PBR texture sets for realistic materials, and ready-to-use 3D models. All assets are CC0 licensed (free for any use, no attribution required).
+
+---
 
 ## Why Use This?
 
+- **Spatial intelligence**: AI understands real-world dimensions, detects collisions, and reasons about object relationships — not just coordinates.
 - **AI-powered generation**: Generate 3D meshes from text descriptions or reference images using Meshy and Stability AI.
+- **Complete scene control**: Lighting, cameras, materials, rendering — everything you need to go from empty scene to finished render.
 - **Rapid prototyping**: Iterate on designs through conversation, getting immediate visual feedback.
-- **Automation**: Script complex modeling workflows without writing Blender Python code.
-- **VR-ready exports**: Optimize and export models for Meta Quest and Horizon Worlds.
-- **Free assets**: Access thousands of CC0 HDRIs, textures, and models from Poly Haven.
+- **VR-ready exports**: Optimize and export models for Meta Quest and Horizon Worlds with built-in platform presets.
+- **Free assets**: Thousands of CC0 HDRIs, textures, and models from Poly Haven — no API key required.
 
 
 ## Quick Start
@@ -152,9 +194,9 @@ Create and position cameras for rendering and visualization.
 | `set_camera_properties` | Adjust lens, DOF, clipping, etc. |
 | `get_camera_info`, `list_cameras` | Query camera information |
 
-### Spatial Reasoning
+### Spatial Reasoning & Scene Intelligence
 
-Tools for understanding and manipulating scene layout with spatial awareness.
+Tools for understanding and manipulating scene layout with real-world spatial awareness.
 
 | Tool | Description |
 |------|-------------|
@@ -165,6 +207,11 @@ Tools for understanding and manipulating scene layout with spatial awareness.
 | `validate_transform` | Check a move/rotate/scale for collisions before applying |
 | `get_safe_movement_range` | Calculate how far an object can move in each direction |
 | `move_object_semantic` | Move objects with natural language ("place on the desk") |
+| `get_object_dimensions` | Look up real-world dimensions for 55+ common objects |
+| `list_known_objects` | Browse the dimensions database by category |
+| `get_placement_rules` | Get placement guidelines (clearances, heights, spacing) |
+| `show_floor_plan` | ASCII visualization from any angle (top/bottom/front/back/left/right/all) |
+| `create_room_bounds` | Create a properly dimensioned room (floor + 4 walls) |
 
 See the **[Scene Building Guide](docs/SCENE_BUILDING_GUIDE.md)** for detailed usage patterns and examples.
 
