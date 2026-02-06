@@ -4,6 +4,13 @@ Create 3D models in Blender using natural language. MCP server lets agent direct
 
 ---
 
+## Samples created solely with prompts to Claude Opus 4.6
+
+![Prompt generated loft scene](https://github.com/mlolson/blender-orchestrator/blob/main/examples/room.png "Loft with furniture")
+![Prompt generated forest scene](https://github.com/mlolson/blender-orchestrator/blob/main/examples/forest.png "Forest scene")
+![Prompt generated bug character](https://github.com/mlolson/blender-orchestrator/blob/main/examples/bug.png "Bug character")
+![Prompt generated rocket](https://github.com/mlolson/blender-orchestrator/blob/main/examples/rocket.png "Saturn V rocket")
+
 ## Features
 
 ### 🧠 Spatial Intelligence Suite
