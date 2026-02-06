@@ -8,38 +8,51 @@ def register_tools(mcp, client):
 
     @mcp.tool()
     async def show_floor_plan(
-        cell_size: float = 0.5,
+        view: str = "top",
+        cell_size: float = 0.25,
+        max_grid: int = 120,
         include_labels: bool = True,
     ) -> str:
-        """Show an ASCII top-down floor plan of the current scene.
+        """Show an ASCII view of the current scene from any angle.
 
-        Projects all mesh objects onto a 2D grid viewed from above.
+        Projects all mesh objects onto a 2D grid from the chosen viewpoint.
         Walls shown as W, doors as D, floor as #, other objects by
         their first letter or a short abbreviation. Empty cells are dots.
 
-        This gives a quick spatial overview for reasoning about layout,
-        placement, and room arrangement.
+        Use "all" to get views from all 6 sides at once for a complete
+        spatial understanding of the scene.
 
         Args:
-            cell_size: Grid cell size in meters (smaller = more detail, default 0.5)
+            view: Viewpoint - "top", "bottom", "front", "back", "left", "right", or "all"
+            cell_size: Grid cell size in meters (smaller = higher resolution, default 0.25)
+            max_grid: Maximum grid dimension in cells (default 120, increase for more detail)
             include_labels: Include a legend mapping abbreviations to object names
         """
         result = await client.execute(
             "show_floor_plan",
-            {"cell_size": cell_size, "include_labels": include_labels},
+            {
+                "view": view,
+                "cell_size": cell_size,
+                "max_grid": max_grid,
+                "include_labels": include_labels,
+            },
         )
 
         if not result.get("success"):
-            return f"❌ Failed to generate floor plan: {result.get('error', 'Unknown error')}"
+            return f"❌ Failed to generate view: {result.get('error', 'Unknown error')}"
 
         lines = []
-        lines.append("=" * 50)
-        lines.append("FLOOR PLAN (Top-Down View)")
-        lines.append("=" * 50)
+        lines.append("=" * 60)
+        views = result.get("views", ["top"])
+        if len(views) == 1:
+            lines.append(f"SCENE VIEW: {views[0].upper()}")
+        else:
+            lines.append(f"SCENE VIEWS: {', '.join(v.upper() for v in views)}")
+        lines.append("=" * 60)
         lines.append("")
         lines.append(result["floor_plan"])
         lines.append("")
-        lines.append(f"Objects: {result['object_count']} | Grid: {result['grid_size'][0]}x{result['grid_size'][1]}")
+        lines.append(f"Objects: {result['object_count']}")
 
         return "\n".join(lines)
 
