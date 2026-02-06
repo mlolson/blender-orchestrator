@@ -16,6 +16,7 @@ from . import ai_texture_generation
 from . import spatial
 from . import lighting
 from . import camera
+from . import dimensions
 
 
 def register_all_tools(mcp, client):
@@ -42,3 +43,5 @@ def register_all_tools(mcp, client):
     lighting.register_tools(mcp, client)
     # Camera tools
     camera.register_tools(mcp, client)
+    # Object dimensions database
+    dimensions.register_tools(mcp, client)
