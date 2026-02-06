@@ -138,6 +138,34 @@ def register_tools(mcp, client):
         return f"Created and assigned material '{mat.get('name', material_name)}' to '{object_name}'"
 
     @mcp.tool()
+    async def apply_texture_to_object(
+        object_name: str,
+        texture_path: str,
+        texture_type: str = "diffuse",
+        material_name: Optional[str] = None,
+    ) -> str:
+        """Apply a texture image file to an object, creating a new textured material.
+
+        Args:
+            object_name: Name of the object to apply the texture to
+            texture_path: Absolute path to the texture image file on disk
+            texture_type: Type of texture map (diffuse, normal, roughness, metallic)
+            material_name: Optional name for the new material
+        """
+        params = {
+            "object_name": object_name,
+            "texture_path": texture_path,
+            "texture_type": texture_type,
+        }
+        if material_name:
+            params["name"] = material_name
+
+        result = await client.execute("apply_texture", params)
+        if "error" in result:
+            return f"Error: {result['error']}"
+        return f"Applied {texture_type} texture to '{object_name}' from {texture_path}"
+
+    @mcp.tool()
     async def delete_material(material_name: str) -> str:
         """Delete a material from the Blender file.
 

@@ -382,4 +382,5 @@ TEXTURE_APPLICATION_HANDLERS = {
     "create_pbr_material_from_textures": create_pbr_material_from_textures,
     "apply_texture_from_url": apply_texture_from_url,
     "create_material_with_texture": create_material_with_texture,
+    "apply_texture": create_material_with_texture,
 }
