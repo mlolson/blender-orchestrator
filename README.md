@@ -7,6 +7,10 @@ MCP tooling suite for creation of 3D scenes, with plug-innable mesh and image ge
 **Seamless integration with mesh and image generation services** 
 Plug in the API keys to mesh generation services like meshy, or image generation service like stability, Replicate, or Leonardo.ai. The agent can make use of them via standardized MCP APIs.
 
+## 📖 Scene Building Guide
+
+New to building 3D scenes with AI? Read the **[Scene Building Guide](docs/SCENE_BUILDING_GUIDE.md)** — a comprehensive reference covering room dimensions, object placement rules, spatial calculations, common mistakes, and complete worked examples. It's designed to be read by AI agents before building a scene.
+
 ## Why Use This?
 
 - **AI-powered generation**: Generate 3D meshes from text descriptions or reference images using Meshy and Stability AI.
@@ -147,6 +151,22 @@ Create and position cameras for rendering and visualization.
 | `frame_objects` | Auto-position camera to frame objects nicely |
 | `set_camera_properties` | Adjust lens, DOF, clipping, etc. |
 | `get_camera_info`, `list_cameras` | Query camera information |
+
+### Spatial Reasoning
+
+Tools for understanding and manipulating scene layout with spatial awareness.
+
+| Tool | Description |
+|------|-------------|
+| `get_semantic_scene_summary` | Enhanced scene summary with spatial semantics, clusters, and object relationships |
+| `get_spatial_relationships` | Get what's near, on top of, behind, or in front of an object |
+| `query_spatial` | Answer natural language questions ("what is on the table?") |
+| `find_placement_position` | Find collision-free position relative to another object |
+| `validate_transform` | Check a move/rotate/scale for collisions before applying |
+| `get_safe_movement_range` | Calculate how far an object can move in each direction |
+| `move_object_semantic` | Move objects with natural language ("place on the desk") |
+
+See the **[Scene Building Guide](docs/SCENE_BUILDING_GUIDE.md)** for detailed usage patterns and examples.
 
 ### Scene Management
 
