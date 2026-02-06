@@ -13,6 +13,7 @@ from .spatial import SPATIAL_HANDLERS
 from .lighting import LIGHTING_HANDLERS
 from .camera import CAMERA_HANDLERS
 from .dimensions import DIMENSIONS_HANDLERS
+from .floor_plan import FLOOR_PLAN_HANDLERS
 from ..templates import TEMPLATE_HANDLERS
 
 
@@ -41,4 +42,6 @@ def get_handler_registry():
     registry.update(CAMERA_HANDLERS)
     # Object dimensions handlers
     registry.update(DIMENSIONS_HANDLERS)
+    # Floor plan visualization handlers
+    registry.update(FLOOR_PLAN_HANDLERS)
     return registry

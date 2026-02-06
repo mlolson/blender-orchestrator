@@ -17,6 +17,7 @@ from . import spatial
 from . import lighting
 from . import camera
 from . import dimensions
+from . import floor_plan
 
 
 def register_all_tools(mcp, client):
@@ -45,3 +46,5 @@ def register_all_tools(mcp, client):
     camera.register_tools(mcp, client)
     # Object dimensions database
     dimensions.register_tools(mcp, client)
+    # Floor plan visualization tools
+    floor_plan.register_tools(mcp, client)
