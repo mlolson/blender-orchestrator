@@ -4,7 +4,7 @@ Create 3D models in Blender using natural language. MCP server lets agent direct
 
 ---
 
-## 🔥 What's New
+## Features
 
 ### 🧠 Spatial Intelligence Suite
 Spatial intelligence suite helps AI understand space.
@@ -47,8 +47,10 @@ Create perspective, orthographic, and panoramic cameras. Auto-frame objects for 
 ### 🏠 Room Creation
 One command creates a properly dimensioned room with floor and four walls. Specify width, depth, height, and wall thickness — then start furnishing. Combined with the dimensions database and spatial tools, the AI can furnish a realistic room from a single prompt.
 
-### 🌍 Poly Haven Integration
-Access **thousands of free CC0 assets** from [Poly Haven](https://polyhaven.com) — no API key needed. Download HDRIs for environment lighting, PBR texture sets for realistic materials, and ready-to-use 3D models. All assets are CC0 licensed (free for any use, no attribution required).
+### 🌍 Plugin Model and Texture generation services
+Extensible architecture allows you to plug in texture and model gen services of your choice, including Replicate, Meshy, Stability.ai, and more.
+
+Built in access to thousands of free CC0 assets from [Poly Haven](https://polyhaven.com) — no API key needed. Download HDRIs for environment lighting, PBR texture sets for realistic materials, and ready-to-use 3D models. All assets are CC0 licensed (free for any use, no attribution required).
 
 ---
 
