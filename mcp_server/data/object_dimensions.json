@@ -1,0 +1,705 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "units": "meters",
+    "description": "Real-world object dimensions and placement rules for scene layout assistance."
+  },
+  "objects": {
+    "dining_chair": {
+      "category": "seating",
+      "dimensions": { "width": [0.40, 0.55], "depth": [0.40, 0.55], "height": [0.75, 0.95] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.6,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.05,
+        "typical_groupings": ["dining_table"]
+      }
+    },
+    "office_chair": {
+      "category": "seating",
+      "dimensions": { "width": [0.55, 0.70], "depth": [0.55, 0.70], "height": [0.90, 1.20] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.3,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["office_desk"]
+      }
+    },
+    "armchair": {
+      "category": "seating",
+      "dimensions": { "width": [0.75, 1.00], "depth": [0.80, 1.00], "height": [0.75, 1.00] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.15,
+        "typical_groupings": ["coffee_table", "side_table", "floor_lamp"]
+      }
+    },
+    "sofa_2seat": {
+      "category": "seating",
+      "dimensions": { "width": [1.40, 1.80], "depth": [0.80, 1.00], "height": [0.75, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.2,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["coffee_table", "side_table", "floor_lamp"]
+      }
+    },
+    "sofa_3seat": {
+      "category": "seating",
+      "dimensions": { "width": [2.00, 2.60], "depth": [0.85, 1.05], "height": [0.75, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.2,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["coffee_table", "side_table", "floor_lamp"]
+      }
+    },
+    "bar_stool": {
+      "category": "seating",
+      "dimensions": { "width": [0.35, 0.45], "depth": [0.35, 0.45], "height": [0.65, 0.80] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.5,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["kitchen_island", "bar_counter"]
+      }
+    },
+    "bench": {
+      "category": "seating",
+      "dimensions": { "width": [1.00, 1.80], "depth": [0.35, 0.50], "height": [0.40, 0.50] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["dining_table"]
+      }
+    },
+    "dining_table": {
+      "category": "tables",
+      "dimensions": { "width": [1.20, 2.00], "depth": [0.80, 1.10], "height": [0.72, 0.78] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.8,
+        "clearance_sides": 0.8,
+        "typical_groupings": ["dining_chair"]
+      }
+    },
+    "coffee_table": {
+      "category": "tables",
+      "dimensions": { "width": [0.80, 1.40], "depth": [0.50, 0.80], "height": [0.35, 0.50] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.5,
+        "clearance_back": 0.5,
+        "clearance_sides": 0.3,
+        "typical_groupings": ["sofa_2seat", "sofa_3seat", "armchair"]
+      }
+    },
+    "side_table": {
+      "category": "tables",
+      "dimensions": { "width": [0.35, 0.60], "depth": [0.35, 0.60], "height": [0.50, 0.65] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.2,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["sofa_2seat", "sofa_3seat", "armchair", "bed_double"]
+      }
+    },
+    "console_table": {
+      "category": "tables",
+      "dimensions": { "width": [0.80, 1.50], "depth": [0.25, 0.40], "height": [0.72, 0.85] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["table_lamp", "wall_mirror"]
+      }
+    },
+    "office_desk": {
+      "category": "tables",
+      "dimensions": { "width": [1.20, 1.80], "depth": [0.60, 0.80], "height": [0.72, 0.76] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.2,
+        "typical_groupings": ["office_chair", "desk_lamp", "monitor"]
+      }
+    },
+    "nightstand": {
+      "category": "tables",
+      "dimensions": { "width": [0.40, 0.60], "depth": [0.35, 0.50], "height": [0.50, 0.65] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.3,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["bed_single", "bed_double", "table_lamp"]
+      }
+    },
+    "kitchen_island": {
+      "category": "tables",
+      "dimensions": { "width": [1.20, 2.40], "depth": [0.60, 1.00], "height": [0.90, 0.95] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 1.0,
+        "clearance_sides": 0.9,
+        "typical_groupings": ["bar_stool"]
+      }
+    },
+    "bookshelf": {
+      "category": "storage",
+      "dimensions": { "width": [0.60, 1.20], "depth": [0.25, 0.40], "height": [1.50, 2.20] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": []
+      }
+    },
+    "wardrobe": {
+      "category": "storage",
+      "dimensions": { "width": [0.80, 2.00], "depth": [0.55, 0.65], "height": [1.80, 2.40] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": []
+      }
+    },
+    "dresser": {
+      "category": "storage",
+      "dimensions": { "width": [0.80, 1.60], "depth": [0.40, 0.55], "height": [0.70, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["wall_mirror"]
+      }
+    },
+    "tv_stand": {
+      "category": "storage",
+      "dimensions": { "width": [1.00, 1.80], "depth": [0.35, 0.50], "height": [0.40, 0.60] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 2.0,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["television"]
+      }
+    },
+    "filing_cabinet": {
+      "category": "storage",
+      "dimensions": { "width": [0.40, 0.50], "depth": [0.50, 0.70], "height": [0.65, 1.35] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.7,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["office_desk"]
+      }
+    },
+    "kitchen_cabinet": {
+      "category": "storage",
+      "dimensions": { "width": [0.40, 0.90], "depth": [0.30, 0.35], "height": [0.60, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 1.40,
+        "clearance_front": 0.6,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": []
+      }
+    },
+    "sideboard": {
+      "category": "storage",
+      "dimensions": { "width": [1.20, 2.00], "depth": [0.40, 0.50], "height": [0.75, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["dining_table"]
+      }
+    },
+    "floor_lamp": {
+      "category": "lighting",
+      "dimensions": { "width": [0.25, 0.50], "depth": [0.25, 0.50], "height": [1.40, 1.80] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.3,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.2,
+        "typical_groupings": ["sofa_2seat", "sofa_3seat", "armchair"]
+      }
+    },
+    "table_lamp": {
+      "category": "lighting",
+      "dimensions": { "width": [0.15, 0.40], "depth": [0.15, 0.40], "height": [0.30, 0.60] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.1,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": ["nightstand", "side_table", "office_desk", "console_table"]
+      }
+    },
+    "desk_lamp": {
+      "category": "lighting",
+      "dimensions": { "width": [0.15, 0.25], "depth": [0.15, 0.30], "height": [0.35, 0.55] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.1,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": ["office_desk"]
+      }
+    },
+    "pendant_light": {
+      "category": "lighting",
+      "dimensions": { "width": [0.20, 0.60], "depth": [0.20, 0.60], "height": [0.20, 0.50] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 2.00,
+        "clearance_front": 0.3,
+        "clearance_back": 0.3,
+        "clearance_sides": 0.3,
+        "typical_groupings": ["dining_table", "kitchen_island"]
+      }
+    },
+    "chandelier": {
+      "category": "lighting",
+      "dimensions": { "width": [0.40, 1.20], "depth": [0.40, 1.20], "height": [0.40, 1.00] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 2.10,
+        "clearance_front": 0.5,
+        "clearance_back": 0.5,
+        "clearance_sides": 0.5,
+        "typical_groupings": ["dining_table"]
+      }
+    },
+    "wall_sconce": {
+      "category": "lighting",
+      "dimensions": { "width": [0.10, 0.25], "depth": [0.10, 0.20], "height": [0.20, 0.40] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 1.60,
+        "clearance_front": 0.3,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.2,
+        "typical_groupings": []
+      }
+    },
+    "area_rug": {
+      "category": "decor",
+      "dimensions": { "width": [1.20, 3.00], "depth": [1.70, 4.00], "height": [0.005, 0.02] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.0,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["coffee_table", "sofa_3seat", "dining_table"]
+      }
+    },
+    "wall_mirror": {
+      "category": "decor",
+      "dimensions": { "width": [0.40, 1.20], "depth": [0.02, 0.05], "height": [0.60, 1.80] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.90,
+        "clearance_front": 0.5,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["console_table", "dresser"]
+      }
+    },
+    "picture_frame": {
+      "category": "decor",
+      "dimensions": { "width": [0.20, 0.80], "depth": [0.02, 0.05], "height": [0.25, 1.00] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 1.40,
+        "clearance_front": 0.1,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": []
+      }
+    },
+    "vase": {
+      "category": "decor",
+      "dimensions": { "width": [0.08, 0.25], "depth": [0.08, 0.25], "height": [0.15, 0.50] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.05,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": ["coffee_table", "console_table", "dining_table"]
+      }
+    },
+    "potted_plant": {
+      "category": "decor",
+      "dimensions": { "width": [0.15, 0.60], "depth": [0.15, 0.60], "height": [0.20, 1.50] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.2,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": []
+      }
+    },
+    "wall_clock": {
+      "category": "decor",
+      "dimensions": { "width": [0.25, 0.50], "depth": [0.03, 0.08], "height": [0.25, 0.50] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 1.50,
+        "clearance_front": 0.1,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.2,
+        "typical_groupings": []
+      }
+    },
+    "sculpture": {
+      "category": "decor",
+      "dimensions": { "width": [0.10, 0.50], "depth": [0.10, 0.50], "height": [0.15, 0.80] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.2,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["bookshelf", "console_table"]
+      }
+    },
+    "refrigerator": {
+      "category": "appliances",
+      "dimensions": { "width": [0.60, 0.90], "depth": [0.65, 0.80], "height": [1.50, 1.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": []
+      }
+    },
+    "oven": {
+      "category": "appliances",
+      "dimensions": { "width": [0.55, 0.65], "depth": [0.55, 0.65], "height": [0.85, 0.95] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.05,
+        "typical_groupings": []
+      }
+    },
+    "dishwasher": {
+      "category": "appliances",
+      "dimensions": { "width": [0.55, 0.65], "depth": [0.55, 0.65], "height": [0.82, 0.88] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.9,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": []
+      }
+    },
+    "washing_machine": {
+      "category": "appliances",
+      "dimensions": { "width": [0.55, 0.65], "depth": [0.55, 0.65], "height": [0.82, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.9,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": []
+      }
+    },
+    "microwave": {
+      "category": "appliances",
+      "dimensions": { "width": [0.45, 0.55], "depth": [0.35, 0.45], "height": [0.25, 0.35] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.4,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.05,
+        "typical_groupings": []
+      }
+    },
+    "television": {
+      "category": "appliances",
+      "dimensions": { "width": [0.90, 1.50], "depth": [0.05, 0.10], "height": [0.55, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.80,
+        "clearance_front": 2.0,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["tv_stand", "sofa_3seat"]
+      }
+    },
+    "monitor": {
+      "category": "appliances",
+      "dimensions": { "width": [0.50, 0.70], "depth": [0.15, 0.25], "height": [0.35, 0.50] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.5,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["office_desk"]
+      }
+    },
+    "bed_single": {
+      "category": "seating",
+      "dimensions": { "width": [0.90, 1.00], "depth": [1.90, 2.00], "height": [0.45, 0.65] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.5,
+        "typical_groupings": ["nightstand", "table_lamp"]
+      }
+    },
+    "bed_double": {
+      "category": "seating",
+      "dimensions": { "width": [1.40, 1.60], "depth": [1.90, 2.10], "height": [0.45, 0.65] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.5,
+        "typical_groupings": ["nightstand", "table_lamp", "dresser"]
+      }
+    },
+    "bed_king": {
+      "category": "seating",
+      "dimensions": { "width": [1.80, 2.00], "depth": [2.00, 2.15], "height": [0.45, 0.65] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.6,
+        "typical_groupings": ["nightstand", "table_lamp", "dresser"]
+      }
+    },
+    "garden_chair": {
+      "category": "outdoor",
+      "dimensions": { "width": [0.50, 0.65], "depth": [0.55, 0.70], "height": [0.75, 0.90] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.6,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["garden_table"]
+      }
+    },
+    "garden_table": {
+      "category": "outdoor",
+      "dimensions": { "width": [0.80, 1.50], "depth": [0.80, 1.50], "height": [0.70, 0.78] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.8,
+        "clearance_back": 0.8,
+        "clearance_sides": 0.8,
+        "typical_groupings": ["garden_chair"]
+      }
+    },
+    "park_bench": {
+      "category": "outdoor",
+      "dimensions": { "width": [1.20, 1.80], "depth": [0.50, 0.65], "height": [0.70, 0.85] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.3,
+        "typical_groupings": []
+      }
+    },
+    "planter_box": {
+      "category": "outdoor",
+      "dimensions": { "width": [0.30, 1.00], "depth": [0.30, 0.50], "height": [0.30, 0.80] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.3,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": []
+      }
+    },
+    "bbq_grill": {
+      "category": "outdoor",
+      "dimensions": { "width": [0.80, 1.50], "depth": [0.50, 0.70], "height": [0.90, 1.20] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.5,
+        "clearance_back": 0.3,
+        "clearance_sides": 0.5,
+        "typical_groupings": []
+      }
+    },
+    "umbrella_patio": {
+      "category": "outdoor",
+      "dimensions": { "width": [2.00, 3.50], "depth": [2.00, 3.50], "height": [2.00, 2.70] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.5,
+        "clearance_back": 0.5,
+        "clearance_sides": 0.5,
+        "typical_groupings": ["garden_table", "garden_chair"]
+      }
+    },
+    "standing_desk": {
+      "category": "office",
+      "dimensions": { "width": [1.20, 1.80], "depth": [0.60, 0.80], "height": [0.70, 1.25] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 0.05,
+        "clearance_sides": 0.2,
+        "typical_groupings": ["office_chair", "monitor", "desk_lamp"]
+      }
+    },
+    "conference_table": {
+      "category": "office",
+      "dimensions": { "width": [1.80, 4.00], "depth": [0.90, 1.50], "height": [0.72, 0.76] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 1.0,
+        "clearance_back": 1.0,
+        "clearance_sides": 1.0,
+        "typical_groupings": ["office_chair"]
+      }
+    },
+    "whiteboard": {
+      "category": "office",
+      "dimensions": { "width": [0.90, 2.40], "depth": [0.03, 0.08], "height": [0.60, 1.20] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.90,
+        "clearance_front": 1.5,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": []
+      }
+    },
+    "printer": {
+      "category": "office",
+      "dimensions": { "width": [0.35, 0.55], "depth": [0.30, 0.50], "height": [0.15, 0.40] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.4,
+        "clearance_back": 0.1,
+        "clearance_sides": 0.1,
+        "typical_groupings": ["office_desk"]
+      }
+    },
+    "bookend": {
+      "category": "office",
+      "dimensions": { "width": [0.10, 0.18], "depth": [0.10, 0.18], "height": [0.15, 0.25] },
+      "placement": {
+        "against_wall": false,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.05,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.0,
+        "typical_groupings": ["bookshelf", "office_desk"]
+      }
+    },
+    "bathtub": {
+      "category": "appliances",
+      "dimensions": { "width": [0.60, 0.80], "depth": [1.40, 1.80], "height": [0.45, 0.60] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.7,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.1,
+        "typical_groupings": []
+      }
+    },
+    "toilet": {
+      "category": "appliances",
+      "dimensions": { "width": [0.35, 0.45], "depth": [0.60, 0.75], "height": [0.38, 0.42] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.6,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.2,
+        "typical_groupings": []
+      }
+    },
+    "sink_vanity": {
+      "category": "appliances",
+      "dimensions": { "width": [0.50, 1.20], "depth": [0.40, 0.55], "height": [0.80, 0.90] },
+      "placement": {
+        "against_wall": true,
+        "floor_clearance": 0.0,
+        "clearance_front": 0.7,
+        "clearance_back": 0.0,
+        "clearance_sides": 0.05,
+        "typical_groupings": ["wall_mirror"]
+      }
+    }
+  }
+}
