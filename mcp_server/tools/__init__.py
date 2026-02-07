@@ -18,6 +18,7 @@ from . import lighting
 from . import camera
 from . import dimensions
 from . import floor_plan
+from . import mesh_import
 
 
 def register_all_tools(mcp, client):
@@ -48,3 +49,5 @@ def register_all_tools(mcp, client):
     dimensions.register_tools(mcp, client)
     # Floor plan visualization tools
     floor_plan.register_tools(mcp, client)
+    # Mesh/model import tools
+    mesh_import.register_tools(mcp, client)
