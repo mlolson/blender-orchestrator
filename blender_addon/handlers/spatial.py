@@ -772,8 +772,8 @@ def _parse_position_instruction(instruction: str) -> Dict[str, Any]:
     }
     
     patterns = [
-        (r"(?:place|put|move|set) (?:it |this )?on (?:the |top of )?(?:the )?(.+?)$", "on"),
         (r"(?:place|put|move|set) (?:it |this )?on (?:the )?(left|right) (?:corner |side )?of (?:the )?(.+?)$", "corner"),
+        (r"(?:place|put|move|set) (?:it |this )?on (?:the |top of )?(?:the )?(.+?)$", "on"),
         (r"(?:place|put|move|set) (?:it |this )?(?:next to|beside) (?:the )?(.+?)$", "next_to"),
         (r"(?:place|put|move|set) (?:it |this )?(?:to the )?(left|right) of (?:the )?(.+?)$", "side"),
         (r"(?:place|put|move|set) (?:it |this )?(in front of|behind) (?:the )?(.+?)$", "front_back"),
